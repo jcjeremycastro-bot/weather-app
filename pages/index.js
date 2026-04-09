@@ -1,12 +1,8 @@
 import { useState, useEffect } from 'react'
 
 import { MainCard } from '../components/MainCard'
-import { ContentBox } from '../components/ContentBox'
-import { Header } from '../components/Header'
-import { DateAndTime } from '../components/DateAndTime'
 import { Search } from '../components/Search'
 import { MetricsBox } from '../components/MetricsBox'
-import { UnitSwitch } from '../components/UnitSwitch'
 import { LoadingScreen } from '../components/LoadingScreen'
 import { ErrorScreen } from '../components/ErrorScreen'
 
@@ -16,7 +12,6 @@ export const App = () => {
   const [cityInput, setCityInput] = useState('Rennes')
   const [triggerFetch, setTriggerFetch] = useState(true)
   const [weatherData, setWeatherData] = useState()
-  const [unitSystem, setUnitSystem] = useState('metric')
 
   useEffect(() => {
     const getData = async () => {
@@ -32,9 +27,6 @@ export const App = () => {
     getData()
   }, [triggerFetch])
 
-  const changeSystem = () =>
-    unitSystem == 'metric' ? setUnitSystem('imperial') : setUnitSystem('metric')
-
   return weatherData && !weatherData.message ? (
     <div className={styles.wrapper}>
       <MainCard
@@ -43,26 +35,7 @@ export const App = () => {
         iconName={weatherData.weather[0].icon}
         weatherData={weatherData}
       />
-      <ContentBox>
-        <Header>
-          <DateAndTime weatherData={weatherData} unitSystem={unitSystem} />
-          <Search
-            placeHolder="Search a city..."
-            value={cityInput}
-            onFocus={e => {
-              e.target.value = ''
-              e.target.placeholder = ''
-            }}
-            onChange={e => setCityInput(e.target.value)}
-            onKeyDown={e => {
-              e.keyCode === 13 && setTriggerFetch(!triggerFetch)
-              e.target.placeholder = 'Search a city...'
-            }}
-          />
-        </Header>
-        <MetricsBox weatherData={weatherData} />
-        <UnitSwitch onClick={changeSystem} unitSystem={unitSystem} />
-      </ContentBox>
+      <MetricsBox weatherData={weatherData} />
     </div>
   ) : weatherData && weatherData.message ? (
     <ErrorScreen errorMessage="City not found, try again!">
