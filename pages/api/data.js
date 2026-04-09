@@ -1,8 +1,32 @@
 export default async function handler(req, res) {
-  const { cityInput } = req.body;
-  const getWeatherData = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=${cityInput}&units=metric&appid=${process.env.OPENWEATHER_API_KEY}`
-  );
-  const data = await getWeatherData.json();
-  res.status(200).json(data);
+  const { cityInput } = req.body
+
+  const normalizedData = {
+    name: 'City Name',
+    sys: {
+      country: 'Country Code',
+      sunrise: 1640995200, // Unix timestamp
+      sunset: 1641027600, // Unix timestamp
+    },
+    weather: [
+      {
+        description: 'Weather description',
+        icon: '01d',
+      },
+    ],
+    main: {
+      temp: 20.5,
+      feels_like: 22.1,
+      humidity: 65,
+    },
+    wind: {
+      speed: 3.5,
+      deg: 180,
+    },
+    visibility: 10000, // in meters
+    dt: 1641012345, // Unix timestamp
+    timezone: 3600, // UTC offset in seconds
+  }
+
+  res.status(200).json(normalizedData)
 }
