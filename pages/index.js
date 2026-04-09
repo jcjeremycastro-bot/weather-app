@@ -13,7 +13,7 @@ import { ErrorScreen } from '../components/ErrorScreen'
 import styles from '../styles/Home.module.css'
 
 export const App = () => {
-  const [cityInput, setCityInput] = useState('Riga')
+  const [cityInput, setCityInput] = useState('Rennes')
   const [triggerFetch, setTriggerFetch] = useState(true)
   const [weatherData, setWeatherData] = useState()
   const [unitSystem, setUnitSystem] = useState('metric')
@@ -41,7 +41,6 @@ export const App = () => {
         city={weatherData.name}
         description={weatherData.weather[0].description}
         iconName={weatherData.weather[0].icon}
-        unitSystem={unitSystem}
         weatherData={weatherData}
       />
       <ContentBox>
@@ -61,7 +60,7 @@ export const App = () => {
             }}
           />
         </Header>
-        <MetricsBox weatherData={weatherData} unitSystem={unitSystem} />
+        <MetricsBox weatherData={weatherData} />
         <UnitSwitch onClick={changeSystem} unitSystem={unitSystem} />
       </ContentBox>
     </div>

@@ -2,13 +2,7 @@ import Image from 'next/image'
 import { ctoF } from '../services/converters'
 import styles from './MainCard.module.css'
 
-export const MainCard = ({
-  city,
-  description,
-  iconName,
-  unitSystem,
-  weatherData,
-}) => {
+export const MainCard = ({ city, description, iconName, weatherData }) => {
   return (
     <div className={styles.wrapper}>
       <h1 className={styles.location}>{city}</h1>
@@ -20,18 +14,9 @@ export const MainCard = ({
         alt="weatherIcon"
       />
       <h1 className={styles.temperature}>
-        {unitSystem == 'metric'
-          ? Math.round(weatherData.main.temp)
-          : Math.round(ctoF(weatherData.main.temp))}
-        °{unitSystem == 'metric' ? 'C' : 'F'}
+        {Math.round(weatherData.main.temp)}°C
       </h1>
-      <p>
-        Feels like{' '}
-        {unitSystem == 'metric'
-          ? Math.round(weatherData.main.feels_like)
-          : Math.round(ctoF(weatherData.main.feels_like))}
-        °{unitSystem == 'metric' ? 'C' : 'F'}
-      </p>
+      <p>Ressenti {Math.round(weatherData.main.feels_like)}°C</p>
     </div>
   )
 }
