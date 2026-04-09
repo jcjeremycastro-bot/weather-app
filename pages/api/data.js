@@ -1,3 +1,10 @@
+import path from 'path'
+import fs from 'fs'
+
+const configPath = path.join(process.cwd(), 'config', 'config.json')
+const config = JSON.parse(fs.readFileSync(configPath, 'utf8'))
+const cityInput = config.ville || ''
+
 const weatherDescriptionFR = {
   0: 'Ciel dégagé',
   1: 'Plutôt dégagé',
@@ -52,8 +59,6 @@ const wmoCodeToPath = (wmoCode, isDaytime = true) => {
 }
 
 export default async function handler(req, res) {
-  const { cityInput } = req.body
-
   try {
     const getCityGeocoding = await fetch(
       `https://geocoding-api.open-meteo.com/v1/search?name=${cityInput}&count=1&language=fr&format=json&countryCode=FR`,

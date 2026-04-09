@@ -9,20 +9,14 @@ import { ErrorScreen } from '../components/ErrorScreen'
 import styles from '../styles/Home.module.css'
 
 export const App = () => {
-  const [cityInput, setCityInput] = useState('Rennes')
   const [triggerFetch, setTriggerFetch] = useState(true)
   const [weatherData, setWeatherData] = useState()
 
   useEffect(() => {
     const getData = async () => {
-      const res = await fetch('api/data', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ cityInput }),
-      })
+      const res = await fetch('api/data')
       const data = await res.json()
       setWeatherData({ ...data })
-      setCityInput('')
     }
     getData()
   }, [triggerFetch])
