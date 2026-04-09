@@ -1,10 +1,9 @@
-import Image from "next/image";
-import { ctoF } from "../services/converters";
-import styles from "./MainCard.module.css";
+import Image from 'next/image'
+import { ctoF } from '../services/converters'
+import styles from './MainCard.module.css'
 
 export const MainCard = ({
   city,
-  country,
   description,
   iconName,
   unitSystem,
@@ -12,9 +11,7 @@ export const MainCard = ({
 }) => {
   return (
     <div className={styles.wrapper}>
-      <h1 className={styles.location}>
-        {city}, {country}
-      </h1>
+      <h1 className={styles.location}>{city}</h1>
       <p className={styles.description}>{description}</p>
       <Image
         width="300px"
@@ -23,18 +20,18 @@ export const MainCard = ({
         alt="weatherIcon"
       />
       <h1 className={styles.temperature}>
-        {unitSystem == "metric"
+        {unitSystem == 'metric'
           ? Math.round(weatherData.main.temp)
           : Math.round(ctoF(weatherData.main.temp))}
-        °{unitSystem == "metric" ? "C" : "F"}
+        °{unitSystem == 'metric' ? 'C' : 'F'}
       </h1>
       <p>
-        Feels like{" "}
-        {unitSystem == "metric"
+        Feels like{' '}
+        {unitSystem == 'metric'
           ? Math.round(weatherData.main.feels_like)
           : Math.round(ctoF(weatherData.main.feels_like))}
-        °{unitSystem == "metric" ? "C" : "F"}
+        °{unitSystem == 'metric' ? 'C' : 'F'}
       </p>
     </div>
-  );
-};
+  )
+}

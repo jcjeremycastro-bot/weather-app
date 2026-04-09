@@ -85,7 +85,6 @@ export default async function handler(req, res) {
     const normalizedData = {
       name: geocodingData.results[0].name,
       sys: {
-        country: geocodingData.results[0].country_code,
         sunrise: weatherData.daily.sunrise[0], // Unix timestamp
         sunset: weatherData.daily.sunset[0], // Unix timestamp
       },
