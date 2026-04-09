@@ -40,10 +40,15 @@ const wmoCodeToIndex = [
   [45, 48], // mist
 ]
 
-const wmoCodeToPath = wmoCode => {
-  return (
-    iconPath[wmoCodeToIndex.findIndex(codes => codes.includes(wmoCode))] + 'd'
-  )
+const isDaytime = (currentTime, sunrise, sunset) => {
+  return currentTime >= sunrise && currentTime < sunset
+}
+
+const wmoCodeToPath = (wmoCode, isDaytime = true) => {
+  const index = wmoCodeToIndex.findIndex(codes => codes.includes(wmoCode))
+  if (index < 2 && !isDaytime)
+    return iconPath[index] + 'n' // For clear sky and few clouds, use daytime or nighttime icons
+  else return iconPath[index] + 'd'
 }
 
 export default async function handler(req, res) {
@@ -68,6 +73,15 @@ export default async function handler(req, res) {
       return res.status(500).json({ message: 'Failed to fetch weather data' })
     }
 
+    const icon = wmoCodeToPath(
+      weatherData.hourly.weather_code[0],
+      isDaytime(
+        weatherData.hourly.time[0],
+        weatherData.daily.sunrise[0],
+        weatherData.daily.sunset[0],
+      ),
+    )
+
     const normalizedData = {
       name: geocodingData.results[0].name,
       sys: {
@@ -78,7 +92,7 @@ export default async function handler(req, res) {
       weather: [
         {
           description: weatherDescriptionFR[weatherData.hourly.weather_code[0]], // in French
-          icon: wmoCodeToPath(weatherData.hourly.weather_code[0]), // icon path based on WMO code
+          icon, // icon path based on WMO code
         },
       ],
       main: {
