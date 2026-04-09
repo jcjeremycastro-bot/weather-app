@@ -8,7 +8,7 @@ export const MetricsBox = ({ weatherData }) => {
       <MetricsCard
         title={'Humidité'}
         iconSrc={'/icons/humidity.png'}
-        metric={weatherData.main.humidity}
+        metric={weatherData.humidity}
         unit={'%'}
       />
       <MetricsCard
@@ -31,12 +31,12 @@ export const MetricsBox = ({ weatherData }) => {
       <MetricsCard
         title={'Lever du soleil'}
         iconSrc={'/icons/sunrise.png'}
-        metric={unixToLocalTime(weatherData.sys.sunrise, weatherData.timezone)}
+        metric={unixToLocalTime(weatherData.sunrise, weatherData.timezone)}
       />
       <MetricsCard
         title={'Coucher du soleil'}
         iconSrc={'/icons/sunset.png'}
-        metric={unixToLocalTime(weatherData.sys.sunset, weatherData.timezone)}
+        metric={unixToLocalTime(weatherData.sunset, weatherData.timezone)}
       />
     </div>
   )

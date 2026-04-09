@@ -1,7 +1,13 @@
 import Image from 'next/image'
 import styles from './MainCard.module.css'
 
-export const MainCard = ({ city, description, iconName, weatherData }) => {
+export const MainCard = ({
+  city,
+  description,
+  iconName,
+  temperature,
+  apparent_temperature,
+}) => {
   return (
     <div className={styles.wrapper}>
       <h1 className={styles.location}>{city}</h1>
@@ -12,10 +18,8 @@ export const MainCard = ({ city, description, iconName, weatherData }) => {
         src={`/icons/${iconName}.svg`}
         alt="weatherIcon"
       />
-      <h1 className={styles.temperature}>
-        {Math.round(weatherData.main.temp)}°C
-      </h1>
-      <p>Ressenti {Math.round(weatherData.main.feels_like)}°C</p>
+      <h1 className={styles.temperature}>{Math.round(temperature)}°C</h1>
+      <p>Ressenti {Math.round(apparent_temperature)}°C</p>
     </div>
   )
 }

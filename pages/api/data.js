@@ -84,28 +84,22 @@ export default async function handler(req, res) {
 
     const normalizedData = {
       name: geocodingData.results[0].name,
-      sys: {
-        sunrise: weatherData.daily.sunrise[0], // Unix timestamp
-        sunset: weatherData.daily.sunset[0], // Unix timestamp
+      timezone: weatherData.utc_offset_seconds, // UTC offset in seconds
+      temperature: weatherData.hourly.temperature_2m[0], // in °C
+      apparent_temperature: weatherData.hourly.apparent_temperature[0], // in °C
+      sunrise: weatherData.daily.sunrise[0], // Unix timestamp
+      sunset: weatherData.daily.sunset[0], // Unix timestamp
+      humidity: weatherData.hourly.relative_humidity_2m[0], // in %
+      visibility: weatherData.hourly.visibility[0], // in meters
+      weather: {
+        description: weatherDescriptionFR[weatherData.hourly.weather_code[0]], // in French
+        icon, // icon path based on WMO code
       },
-      weather: [
-        {
-          description: weatherDescriptionFR[weatherData.hourly.weather_code[0]], // in French
-          icon, // icon path based on WMO code
-        },
-      ],
-      main: {
-        temp: weatherData.hourly.temperature_2m[0], // in °C
-        feels_like: weatherData.hourly.apparent_temperature[0], // in °C
-        humidity: weatherData.hourly.relative_humidity_2m[0], // in %
-      },
+
       wind: {
         speed: weatherData.hourly.wind_speed_10m[0], // in km/h
         deg: weatherData.hourly.wind_direction_10m[0], // in degrees
       },
-      visibility: weatherData.hourly.visibility[0], // in meters
-      dt: weatherData.hourly.time[0], // Unix timestamp
-      timezone: weatherData.utc_offset_seconds, // UTC offset in seconds
     }
 
     res.status(200).json(normalizedData)

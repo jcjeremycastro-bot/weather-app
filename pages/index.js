@@ -31,9 +31,10 @@ export const App = () => {
     <div className={styles.wrapper}>
       <MainCard
         city={weatherData.name}
-        description={weatherData.weather[0].description}
-        iconName={weatherData.weather[0].icon}
-        weatherData={weatherData}
+        description={weatherData.weather.description}
+        iconName={weatherData.weather.icon}
+        temperature={weatherData.temperature}
+        apparent_temperature={weatherData.apparent_temperature}
       />
       <MetricsBox weatherData={weatherData} />
     </div>
