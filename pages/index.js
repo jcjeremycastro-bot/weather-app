@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 
 import { MainCard } from '../components/MainCard'
-import { Search } from '../components/Search'
 import { MetricsBox } from '../components/MetricsBox'
 import { LoadingScreen } from '../components/LoadingScreen'
 import { ErrorScreen } from '../components/ErrorScreen'
